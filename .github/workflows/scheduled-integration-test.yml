@@ -141,7 +141,6 @@ jobs:
           git config --global --add safe.directory "$(pwd)"
 
       - name: Merge YAML data model
-        working-directory: workspaces
         run: |
           terraform init
           terraform apply -auto-approve
@@ -155,7 +154,7 @@ jobs:
         id: nac-test
         run: |
           set -o pipefail
-          nac-test -d workspaces/merged_configuration.nac.yaml -t ./tests/templates -o ./tests/results 2>&1 | tee test_output.txt
+          nac-test -d ./merged_configuration.nac.yaml -t ./tests/templates -o ./tests/results 2>&1 | tee test_output.txt
 
       - name: Write Job Summary
         if: always()
