@@ -140,10 +140,10 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git config --global --add safe.directory "$(pwd)"
 
-      - name: Merge YAML data model
+      - name: Render merged YAML model
         run: |
-          terraform init
-          terraform apply -auto-approve
+          terraform init -input=false
+          terraform apply -target=module.meraki.module.model -auto-approve -input=false
           if [ ! -f merged_configuration.nac.yaml ]; then
             echo "❌ merged_configuration.nac.yaml not found!"
             exit 1
